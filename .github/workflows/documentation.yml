@@ -36,9 +36,9 @@ jobs:
           echo "Current head at ${CUR_HEAD}"
           git remote add upstream https://github.com/SaiSarathP/dummy-dh.git
           git fetch upstream master
-          git pull
           for commit in $(git rev-list $CUR_HEAD..upstream/master --reverse); do
               echo $commit
+              git pull
               git rebase $commit
               git push origin master
               git checkout master
