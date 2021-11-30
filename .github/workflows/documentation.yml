@@ -38,6 +38,7 @@ jobs:
         run: |
           git config --global user.email "saisarath.punnamaraju@gslab.com"
           git config --global user.name "Sai Sarath"
+          git pull
           git checkout master
           CUR_HEAD=$(git rev-parse HEAD)
           echo "Current head at ${CUR_HEAD}"
