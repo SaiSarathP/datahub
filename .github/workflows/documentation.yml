@@ -29,8 +29,6 @@ jobs:
         run: |
           git config --global user.email "saisarath.punnamaraju@gslab.com"
           git config --global user.name "Sai Sarath"
-          git pull
-          git rebase --skip
           git checkout master
           CUR_HEAD=$(git rev-parse HEAD)
           echo "Current head at ${CUR_HEAD}"
@@ -38,7 +36,6 @@ jobs:
           git fetch upstream master
           for commit in $(git rev-list $CUR_HEAD..upstream/master --reverse); do
               echo $commit
-              git pull
               git rebase $commit
               git push origin master
               git checkout master
