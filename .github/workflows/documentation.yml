@@ -22,6 +22,14 @@ jobs:
         with:
           java-version: 1.8
           fetch-depth: 0 #Number of commits to fetch. 0 indicates all history for all branches and tags.
+          
+      - name: Deploy
+        if: github.event_name == 'push' && github.repository == 'SaiSarathP/dummy-dh'
+        uses: peaceiris/actions-gh-pages@v3  #This is a GitHub Action to deploy your static files to GitHub Pages
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} #GitHub Actions runner automatically creates a GITHUB_TOKEN secret to authenticate in your workflow
+          publish_dir: ./docs-website/build
+          cname: datahubproject.io
       
 
     # Create publish workflow for every commit that is picked up
