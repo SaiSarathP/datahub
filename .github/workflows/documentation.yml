@@ -25,15 +25,6 @@ jobs:
           
       - name: Deploy
         if: github.event_name == 'push' && github.repository == 'SaiSarathP/dummy-dh'
-        uses: peaceiris/actions-gh-pages@v3  #This is a GitHub Action to deploy your static files to GitHub Pages
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} #GitHub Actions runner automatically creates a GITHUB_TOKEN secret to authenticate in your workflow
-          publish_dir: ./docs-website/build
-          cname: datahubproject.io
-      
-
-    # Create publish workflow for every commit that is picked up
-      - name: Update mirror branch to match upstream master
         run: |
           git config --global user.email "saisarath.punnamaraju@gslab.com"
           git config --global user.name "Sai Sarath"
@@ -55,3 +46,7 @@ jobs:
           run: |    #The run keyword tells the job to execute a command on the runner
           sudo apt-get update     
           ./gradlew --info docs-website:build
+      
+
+      
+        
