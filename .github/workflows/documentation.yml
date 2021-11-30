@@ -8,7 +8,7 @@ on:
     types: [published, edited]
       
     # Allows you to run this workflow manually from the Actions tab.
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   gh-pages:
@@ -41,6 +41,7 @@ jobs:
           echo "Current head at ${CUR_HEAD}"
           git remote add upstream https://github.com/SaiSarathP/dummy-dh.git
           git fetch upstream master
+          git pull
           for commit in $(git rev-list $CUR_HEAD..upstream/master --reverse); do
               echo $commit
               git rebase $commit
