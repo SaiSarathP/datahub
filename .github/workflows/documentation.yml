@@ -4,6 +4,8 @@ on:
   push: #Uses the push event, so that the jobs run every time someone pushes a change to the rep
     branches:
       - master
+    paths: 
+      .github/workflows/documentation.yml
   release:
     types: [published, edited]
       
