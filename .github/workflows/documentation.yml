@@ -26,7 +26,7 @@ jobs:
       - name: Deploy
         if: github.event_name == 'push' && github.repository == 'SaiSarathP/dummy-dh'
         run: |
-          git config --global user.email "saisarath.punnamaraju@gs.com"
+          git config --global user.email "saisarath.pu@gs.com"
           git config --global user.name "Sai Sarath"
           git checkout master
           CUR_HEAD=$(git rev-parse HEAD)
