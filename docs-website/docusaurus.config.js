@@ -6,7 +6,7 @@ module.exports = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
   favicon: "img/favicon.ico",
-  organizationName: "linkedin", // Usually your GitHub org/user name.
+  organizationName: "SaiSarathP", // Usually your GitHub org/user name.
   projectName: "datahub", // Usually your repo name.
   stylesheets: [
     "https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap",
