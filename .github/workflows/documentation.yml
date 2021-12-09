@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2 #Checks out the repo and downloads it to the runner, to run actions against the code.
         with:
-          ref: linkedin #Using linkedin branch to pull the remote master changes
+          ref: dev #Using dev branch to pull the remote master changes
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1 
         with:
@@ -28,9 +28,9 @@ jobs:
           git config --global user.email "saisarath.punnamaraju@gslab.com"
           git config --global user.name "Sai Sarath"
           git remote add upstream https://github.com/linkedin/datahub.git          
-          git checkout linkedin
+          git checkout dev
           git pull upstream master
-          git push origin linkedin
+          git push origin dev
           
       - name: Build Docs
         run: |
