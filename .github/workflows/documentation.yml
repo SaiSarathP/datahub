@@ -24,11 +24,12 @@ jobs:
           
       - name: Deploy
         run: |
-          git config --global user.email "saisarath.pu@gs.com"
+          git config --global user.email "saisarath.punnamaraju@gslab.com"
           git config --global user.name "Sai Sarath"
           git remote add upstream https://github.com/linkedin/datahub.git          
-          git checkout master
+          git checkout linkedin
           git pull upstream master
+          git push origin linkedin
           
       - name: Build Docs
         run: |
