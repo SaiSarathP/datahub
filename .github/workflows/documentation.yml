@@ -21,32 +21,20 @@ jobs:
         uses: actions/setup-java@v1 
         with:
           java-version: 1.8
-          fetch-depth: 0 #Number of commits to fetch. 0 indicates all history for all branches and tags.
           
       - name: Deploy
-        if: github.event_name == 'push' && github.repository == 'SaiSarathP/dummy-dh'
         run: |
           git config --global user.email "saisarath.pu@gs.com"
           git config --global user.name "Sai Sarath"
+          git remote add upstream https://github.com/linkedin/datahub.git          
           git checkout master
-          CUR_HEAD=$(git rev-parse HEAD)
-          echo "Current head at ${CUR_HEAD}"
-          git remote add upstream https://github.com/SaiSarathP/dummy-dh.git
-          git fetch upstream master
-          for commit in $(git rev-list $CUR_HEAD..upstream/master --reverse); do
-              echo $commit
-              git rebase $commit
-              git push origin master
-              git checkout master
-              git cherry-pick $commit
-              git push origin master
-              git checkout master
-          done
-          - name: Build Docs
-          run: |    #The run keyword tells the job to execute a command on the runner
-          sudo apt-get update     
+          git pull upstream master
+          
+      - name: Build Docs
+        run: |
           ./gradlew --info docs-website:build
-      
-
-      
-        
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs-website/build    
