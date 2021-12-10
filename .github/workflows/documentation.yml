@@ -31,7 +31,10 @@ jobs:
           git checkout dev
           git pull upstream master
           git push origin dev
-          
+      - name: Patch docs config
+        run: |
+          sed -Ei 's#  url.*#  url "https://saisarathp.github.io",#' docs-website/docusaurus.config.js
+          sed -Ei 's#  baseUrl.*#  baseUrl "/datahub/",#' docs-website/docusaurus.config.js
       - name: Build Docs
         run: |
           ./gradlew --info docs-website:build
