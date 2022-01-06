@@ -27,7 +27,7 @@ jobs:
       
       # Runs a single command using the runners shell
       - name: publish datahub-client jar
-        run: ./gradlew :metadata-integration:java:datahub-client:uploadArchives
+        run: ./gradlew :metadata-integration:java:datahub-client:uploadArchives --info
         env:
           RELEASE_USERNAME: ${{ secrets.RELEASE_USERNAME }}
           RELEASE_PASSWORD: ${{ secrets.RELEASE_PASSWORD }}
