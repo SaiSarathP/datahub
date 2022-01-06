@@ -1,6 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'jacoco'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = 'io.acryl'
+version = '0.0.1.1'
 
 dependencies {
    
@@ -30,4 +35,83 @@ shadowJar {
 
 assemble {
     dependsOn shadowJar
+}
+
+task sourcesJar(type: Jar) {
+     archiveClassifier = 'sources'
+     from sourceSets.main.allSource
+}
+
+
+
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'  
+    from javadoc
+}
+
+
+artifacts {
+    archives javadocJar, sourcesJar, shadowJar
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      def ossrhUsername = System.getenv('RELEASE_USERNAME')
+      def ossrhPassword = System.getenv('RELEASE_PASSWORD')
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      pom.project {
+        name 'Datahub Client'
+        packaging 'shadowJar'
+        // optionally artifactId can be defined here
+        //TODO: update description
+        description 'Library to connect to datahub server'
+        url 'https://datahubproject.io'
+
+        scm {
+          connection 'scm:git:git://github.com/linkedin/datahub.git'
+          developerConnection 'scm:git:ssh://github.com:linkedin/datahub.git'
+          url 'https://github.com/linkedin/datahub.git'
+        }
+
+        licenses {
+          license {
+            name 'The Apache License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+
+        developers {
+          developer {
+            id 'datahub'
+            name 'Datahub'
+            email 'datahub@acryl.io'
+          }
+        }
+      }
+      pom.withXml {
+  	     Node pomNode = asNode()
+         pomNode.dependencies.'*'.findAll().each() {
+            it.parent().remove(it)
+         }
+      } 
+    }
+  }
+}
+
+
+signing {
+    def signingKey = System.getenv("SIGNING_KEY")
+    def signingPassword = System.getenv("SIGNING_PASSWORD")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign configurations.archives
 }
