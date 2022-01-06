@@ -35,5 +35,5 @@ jobs:
         # running build first without datahub-web-react:yarnBuild and then with it is 100% stable
         # datahub-frontend:unzipAssets depends on datahub-web-react:yarnBuild but gradle does not know about it
         run: |
-          ./gradlew :metadata-integration:java:spark-lineage:build
+          ./gradlew :metadata-integration:java:datahub-client:build
  
